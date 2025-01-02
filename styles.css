@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(127, 236, 255);
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(127, 236, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    text-align: center;
+    background-color: rgb(127, 236, 255);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  #drop-area {
+    border: 2px dashed #389aea;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  #drop-area p {
+    font-size: 18px;
+    color: #777;
+  }
+  
+  input[type="file"] {
+    opacity: 1;
+    width: 350px;
+    height: 75px;
+  }
+  
+  button {
+    background-color: rgb(127, 236, 255);
+    color: #389aea;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+
+    
+  
+  button:hover {
+    background-color: #0f6e86;
+  }
+
+  #clearSelectorButton:hover {
+    background-color: #0f6e86;
+  }
+
+
+  
+  #result {
+    margin-top: 20px;
+  }
+  
+  #result h2 {
+    color: #333333;
+  }
+  
+  #prediction {
+    font-size: 18px;
+    color: #555;
+  }
+  

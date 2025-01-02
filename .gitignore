@@ -1,0 +1,25 @@
+# Node.js dependencies
+node_modules/
+
+# Electron build artifacts
+dist/
+
+# Logs
+*.log
+
+# OS-specific files (macOS, Windows, Linux)
+.DS_Store
+Thumbs.db
+
+# Environment variable files
+.env
+
+# Electron cache
+.cache/
+
+# Optional: Ignore .vscode settings or IDE-specific files
+.vscode/
+
+# Ignore temporary files from the editor
+*.swp
+*.swo

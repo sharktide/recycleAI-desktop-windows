@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecycleSMART</title>
+    <link rel="stylesheet" href="styles.css">
+
+    
+  </head>
+  <body>
+    <div class="container">
+      <h1>RecycleSMART</h1>
+      <div id="drop-area">
+        <p>Drag & Drop an image here, or click below this text to select one</p>
+        <input type="file" id="fileInput" name="fileInput" accept="image/*" />
+      </div>
+      <div>
+      <button id="clearSelectorButton">Clear Selected Files</button>
+      </div>
+      <div>
+      <button id="predictButton">Predict</button>
+      </div>
+      <div id="result">
+        <h2>Prediction Result:</h2>
+        <p id="prediction">No result yet.</p>
+      </div>
+      
+    </div>
+    <script src='scripts.js'></script>
+  </body>
+  
+</html>
+
