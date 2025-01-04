@@ -3,13 +3,45 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --win"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "electron": "^33.2.1"
+    "electron": "^22.0.0",
+    "electron-builder": "^22.9.1"
+  },
+  "build": {
+    "appId": "com.sharktide.recyclesmart",
+    "productName": "RecycleSMART",
+    "files": [
+      "**/*",
+      "dist/**/*",
+      "index.html",
+      "main.js",
+      "scripts.js",
+      "styles.css"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "sharktide",
+      "repo": "recyclesmart-desktop-windows",
+      "vPrefixed": true,
+      "channel": "latest",
+      "releaseType": "release"
+    }
+  },
+  "dependencies": {
+    "electron-log": "^5.2.4",
+    "electron-updater": "^6.3.9"
   }
 }
