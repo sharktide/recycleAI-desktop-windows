@@ -1,5 +1,5 @@
 {
-  "name": "recyclesmart-desktop-windows",
+  "name": "RecycleSMART",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "build": {
     "appId": "com.sharktide.recyclesmart",
-    "productName": "RecycleSMART",
+    "productName": "RecycleSMART Desktop windows",
     "files": [
       "**/*",
       "dist/**/*",
@@ -36,8 +36,7 @@
       "owner": "sharktide",
       "repo": "recyclesmart-desktop-windows",
       "vPrefixed": true,
-      "channel": "latest",
-      "releaseType": "release"
+      "channel": "latest"
     }
   },
   "dependencies": {
