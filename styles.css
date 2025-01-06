@@ -2,12 +2,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: rgb(127, 236, 255);
+    background-color: rgb(143, 240, 212);
   }
   
   body {
     font-family: Arial, sans-serif;
-    background-color: rgb(127, 236, 255);
+    background-color: rgb(143, 240, 212);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,7 @@
   
   .container {
     text-align: center;
-    background-color: rgb(127, 236, 255);
+    background-color: rgb(143, 240, 212);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -48,7 +48,7 @@
   }
   
   button {
-    background-color: rgb(127, 236, 255);
+    background-color: rgb(143, 240, 212);
     color: #389aea;
     border: none;
     padding: 10px 20px;
