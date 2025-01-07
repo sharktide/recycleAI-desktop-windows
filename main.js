@@ -96,8 +96,7 @@ async function checkForUpdates() {
     }
 
     log.info(`New version available: ${latestVersion}`);
-    window.alert("An update for RecycleAI is avalible. It will be automatically installed. If the update installer requests you to close this app, you may.")
-
+    
     // Fetch the download URL for the latest version from your /url endpoint
     const urlResponse = await axios.get('https://sharktide-recycleai-latest-windows.hf.space/url');
     const downloadUrl = urlResponse.data.url; // This is the URL to the .exe installer
