@@ -1,7 +1,7 @@
 document.getElementById('fileInput').addEventListener('change', handleFileSelect, true);
 console.log("program started")
 
-fetch('https://sharktide-recyclesmart-api.hf.space/working')
+fetch('https://sharktide-recycleai-api.hf.space/working')
 
 const dropArea = document.getElementById('drop-area');
 dropArea.addEventListener('dragover', (e) => {
@@ -56,7 +56,7 @@ function predictImage() {
   formData.append('file', file);
 
   // Send the image file to the backend (Python/Flask) using fetch
-  fetch('https://sharktide-recyclesmart-api.hf.space/predict', {
+  fetch('https://sharktide-recycleai-api.hf.space/predict', {
     method: 'POST',
     enctype: "multipart/form-data",
     body: formData

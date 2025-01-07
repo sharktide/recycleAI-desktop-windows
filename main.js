@@ -1,102 +1,17 @@
-const { app, BrowserWindow } = require('electron');
-const log = require('electron-log');
-const path = require('path');
-const https = require('https');
-const fs = require('fs');
-const { exec } = require('child_process');
+const { app, BrowserWindow, dialog } = require('electron');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 const os = require('os');
-const { dialog } = require('electron');
+const { exec } = require('child_process');
+const log = require('electron-log');
 
-// Store the current version of the app
-const currentVersion = app.getVersion(); // This will return the version from your package.json
+// Keep track of the current version of the app
+const currentVersion = app.getVersion(); // Assuming version is defined in `package.json`
 
 let mainWindow;
 
-// Function to check for updates
-async function checkForUpdates() {
-  try {
-    // Check if the status endpoint is working
-    const statusResponse = await axios.get('https://sharktide-recyclesmart-latest-windows.hf.space/status');
-    if (statusResponse.data.status !== 'working') {
-      log.error('Update server is not working');
-      return;
-    }
-
-    // Fetch the latest version from the server
-    const latestResponse = await axios.get('https://sharktide-recyclesmart-latest-windows.hf.space/latest');
-    const latestVersion = latestResponse.data.latest;
-
-    // If the current version matches the latest version, no update is needed
-    if (currentVersion === latestVersion) {
-      log.info('App is up to date');
-      return;
-    }
-
-    log.info(`New version available: ${latestVersion}`);
-
-    // Get the download URL from the server
-    const downloadResponse = await axios.get('https://sharktide-recyclesmart-latest-windows.hf.space/url');
-    const downloadUrl = downloadResponse.data.url;
-
-    // Get the filename from the server
-    const filenameResponse = await axios.get('https://sharktide-recyclesmart-latest-windows.hf.space/filename');
-    const filename = filenameResponse.data.filename;
-
-    // Download the new version installer
-    const downloadPath = path.join(os.tmpdir(), filename); // Temp folder to store the installer
-
-    await downloadInstaller(downloadUrl, downloadPath);
-
-    // Once downloaded, execute the installer
-    execInstaller(downloadPath);
-  } catch (error) {
-    log.error('Error checking for updates:', error);
-  }
-}
-
-// Function to download the installer
-function downloadInstaller(url, destination) {
-  return new Promise((resolve, reject) => {
-    const file = fs.createWriteStream(destination);
-    https.get(url, (response) => {
-      if (response.statusCode !== 200) {
-        return reject(`Failed to download: ${response.statusCode}`);
-      }
-      response.pipe(file);
-      file.on('finish', () => {
-        file.close();
-        resolve();
-      });
-    }).on('error', (err) => {
-      fs.unlink(destination, () => {});
-      reject(`Error downloading file: ${err.message}`);
-    });
-  });
-}
-
-// Function to execute the installer
-function execInstaller(installerPath) {
-  log.info('Executing installer...');
-
-  exec(installerPath, (err, stdout, stderr) => {
-    if (err) {
-      log.error('Error executing installer:', err);
-      dialog.showErrorBox('Update Failed', 'An error occurred while updating the app.');
-      return;
-    }
-    log.info('Installer executed successfully:', stdout);
-    dialog.showMessageBox(mainWindow, {
-      type: 'info',
-      message: 'Update installed successfully! The app will restart now.',
-    }).then(() => {
-      app.relaunch();
-      app.quit();
-    });
-  });
-}
-
-// Create the main window
+// Function to create the main window
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -114,11 +29,101 @@ function createWindow() {
   });
 }
 
-// Handle app startup
+// Function to download the installer without triggering the save dialog
+async function downloadInstaller(url, destination) {
+  try {
+    const writer = fs.createWriteStream(destination);
+    const response = await axios.get(url, { responseType: 'stream' });
+
+    // Pipe the stream directly to a file
+    response.data.pipe(writer);
+
+    return new Promise((resolve, reject) => {
+      writer.on('finish', () => {
+        resolve();
+      });
+
+      writer.on('error', (err) => {
+        fs.unlink(destination, () => {}); // Clean up in case of error
+        reject(`Download failed: ${err.message}`);
+      });
+    });
+  } catch (error) {
+    throw new Error(`Download failed: ${error.message}`);
+  }
+}
+
+// Function to execute the installer once downloaded
+function execInstaller(installerPath) {
+  log.info('Executing installer...');
+
+  exec(installerPath, (err, stdout, stderr) => {
+    if (err) {
+      log.error('Error executing installer:', err);
+      dialog.showErrorBox('Update Failed', 'An error occurred while updating the app.');
+      return;
+    }
+    log.info('Installer executed successfully:', stdout);
+
+    // Show success dialog and relaunch app
+    dialog.showMessageBox({
+      type: 'info',
+      message: 'Update installed successfully! The app will restart now.',
+    }).then(() => {
+      app.relaunch();
+      app.quit();
+    });
+  });
+}
+
+// Function to check for updates
+async function checkForUpdates() {
+  try {
+    // Fetch the status of the update server
+    const statusResponse = await axios.get('https://sharktide-recycleai-latest-windows.hf.space/status');
+    if (statusResponse.data.status !== 'working') {
+      log.error('Update server is not working');
+      return;
+    }
+
+    // Fetch the latest version from the server
+    const latestResponse = await axios.get('https://sharktide-recycleai-latest-windows.hf.space/latest');
+    const latestVersion = latestResponse.data.latest;
+
+    if (currentVersion === latestVersion) {
+      log.info('App is up to date');
+      return;
+    }
+
+    log.info(`New version available: ${latestVersion}`);
+    window.alert("An update for RecycleAI is avalible. It will be automatically installed. If the update installer requests you to close this app, you may.")
+
+    // Fetch the download URL for the latest version from your /url endpoint
+    const urlResponse = await axios.get('https://sharktide-recycleai-latest-windows.hf.space/url');
+    const downloadUrl = urlResponse.data.url; // This is the URL to the .exe installer
+
+    // Get the filename for the installer
+    const filenameResponse = await axios.get('https://sharktide-recycleai-latest-windows.hf.space/filename');
+    const filename = filenameResponse.data.filename;
+
+    // Define the temporary path where the installer will be saved
+    const installerPath = path.join(os.tmpdir(), filename); // Save to the system's temporary directory
+
+    // Download the installer
+    await downloadInstaller(downloadUrl, installerPath);
+
+    // Execute the installer after the download is complete
+    execInstaller(installerPath);
+  } catch (error) {
+    log.error('Error checking for updates:', error);
+  }
+}
+
+// When the app is ready, check for updates and create the main window
 app.whenReady().then(() => {
   createWindow();
 
-  // Check for updates on app startup
+  // Check for updates after the window is created
   checkForUpdates();
 
   app.on('activate', () => {
