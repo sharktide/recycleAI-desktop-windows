@@ -76,6 +76,8 @@ function execInstaller(installerPath) {
   });
 }
 
+
+
 // Function to check for updates
 async function checkForUpdates() {
   try {
@@ -96,7 +98,6 @@ async function checkForUpdates() {
     }
 
     log.info(`New version available: ${latestVersion}`);
-    
     // Fetch the download URL for the latest version from your /url endpoint
     const urlResponse = await axios.get('https://sharktide-recycleai-latest-windows.hf.space/url');
     const downloadUrl = urlResponse.data.url; // This is the URL to the .exe installer
