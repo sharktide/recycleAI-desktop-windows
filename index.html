@@ -3,32 +3,44 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleAI</title>
+    <title>RecycleAI 1.2.0</title>
     <link rel="stylesheet" href="styles.css">
-
-    
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon2.ico" type="image/x-icon">
   </head>
   <body>
     <div class="container">
-      <h1>RecycleAI 1.1.2 Windows</h1>
+      <h1>RecycleAI Desktop 1.2.0</h1>
+      <!-- File Upload Section -->
       <div id="drop-area">
         <p>Drag & Drop an image here, or click below this text to select one</p>
         <input type="file" id="fileInput" name="fileInput" accept="image/*" />
       </div>
+      
+      <!-- Webcam Section -->
+      <div id="webcamContainer" style="text-align: center; margin-top: 20px;"></div>
+
+      <!-- Buttons Section -->
       <div>
-      <button id="clearSelectorButton">Clear Selected Files</button>
+        <button id="switchToWebcam">Switch to Webcam (Faulty)</button>
+        <button id="switchToFile" style="display:none;">Switch to File</button>
+        <button id="takePictureButton" style="display:none;">Take Picture</button>
+      </div>
+      
+      <div>
+        <button id="clearSelectorButton">Clear Selected Files</button>
       </div>
       <div>
-      <button id="predictButton">Predict</button>
+        <button id="predictButton">Predict</button>
       </div>
+      
+      <!-- Prediction Result Section -->
       <div id="result">
         <h2>Prediction Result:</h2>
         <p id="prediction">No result yet.</p>
       </div>
       
     </div>
-    <script src='scripts.js'></script>
+    <script src="scripts.js"></script>
   </body>
-  
 </html>
-
