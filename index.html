@@ -3,44 +3,43 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecycleAI 1.2.0</title>
+    <title>RecycleAI 2</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon2.ico" type="image/x-icon">
   </head>
   <body>
     <div class="container">
-      <h1>RecycleAI Desktop 1.2.1</h1>
-      <!-- File Upload Section -->
+      <h1>RecycleAI 2</h1>
+
       <div id="drop-area">
         <p>Drag & Drop an image here, or click below this text to select one</p>
         <input type="file" id="fileInput" name="fileInput" accept="image/*" />
       </div>
-      
-      <!-- Webcam Section -->
+
       <div id="webcamContainer" style="text-align: center; margin-top: 20px;"></div>
 
-      <!-- Buttons Section -->
       <div>
         <button id="switchToWebcam">Switch to Webcam</button>
         <button id="switchToFile" style="display:none;">Switch to File</button>
         <button id="takePictureButton" style="display:none;">Take Picture</button>
       </div>
-      
+
       <div>
         <button id="clearSelectorButton">Clear Selected Files</button>
       </div>
       <div>
         <button id="predictButton">Predict</button>
       </div>
-      
-      <!-- Prediction Result Section -->
+
       <div id="result">
         <h2>Prediction Result:</h2>
         <p id="prediction">No result yet.</p>
       </div>
-      
+      <label>Once you upload a file or take a picture, your images will be checked for recyclables and shown here with bounding boxes. If none show up, try retaking your image. To predict, click on a box and hit predict</label>
+      <canvas id="canvas"></canvas> <!-- Canvas to draw bounding boxes -->
     </div>
+
     <script src="scripts.js"></script>
   </body>
 </html>
